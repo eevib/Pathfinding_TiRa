@@ -24,3 +24,4 @@ Dijkstra time complexicity is O(n+m log n).
 *[Shortest Path, Jump Point Search](https://harablog.wordpress.com/2011/09/07/jump-point-search/#screenshots)
 *[Pixel maps](https://www.movingai.com/benchmarks/street/index.html)
 *[Tietorakenteet ja algoritmit -kirja, Antti Laaksonen](https://www.cs.helsinki.fi/u/ahslaaks/tirakirja/)
+*[Printing Paths in Dijkstra’s Shortest Path Algorithm](https://www.geeksforgeeks.org/printing-paths-dijkstras-shortest-path-algorithm/)

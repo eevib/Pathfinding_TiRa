@@ -5,6 +5,8 @@
  */
 package Pathfinding;
 
+import java.util.Collections;
+
 /**
  *
  * @author eebe
@@ -15,7 +17,11 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        int mapSize = 5;
+        Dijkstra dijkstra = new Dijkstra(0,0,5,5, mapSize);
+        dijkstra.findRoute();
+        dijkstra.route.forEach(node -> System.out.println(node));
+        
     }
-    
+
 }
