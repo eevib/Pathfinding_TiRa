@@ -1,4 +1,6 @@
 # Pathfinding_TiRa
+[![codecov](https://codecov.io/gh/eevib/Pathfinding_TiRa/branch/main/graph/badge.svg?token=QY41EJLVWL)](https://codecov.io/gh/eevib/Pathfinding_TiRa)
+
 Comparing shortest path algorithms Dijkstra and JPS. Project for datastructure and algorithm course at the University of Helsinki.
 
 ## Project specifications
