@@ -4,9 +4,12 @@
 
 ## What did I do during week 2?
 * Coded Dijkstra algorithm using ready data structures.
-* Tried to configure Gradle.
-* Started Junit tests.  
-* Starting Javadoc.
+* Configured Gradle, which took a very long time.
+* Started Junit tests (actually no real test done).
+* Starting Javadoc for Dijkstra class.
+* Configured Checkstyle and Github Actions.
+* Put project to Codecov and added Codecov and Java CI with Gradle badges to github.
+
 
 ## Problems:
 * Gradle configuration.

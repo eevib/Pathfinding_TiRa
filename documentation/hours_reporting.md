@@ -10,5 +10,6 @@ Date | Hours | Done
 | | 
 28.7.2021 | 5.5.h | Starting coding Dijkstra. 
 29.7.2021 | 5 h | Dijkstra distances and finding shortest path, trying to figure out Gradle. 
-30.7.2021 | | |
+30.7.2021 | 5 h | Github actions, Codecov, Gradle, Jacoco and checkstyle config and adding Javadoc
+**Week 2** | 15.5 h |
 -------------------
