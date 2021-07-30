@@ -4,8 +4,11 @@ Date | Hours | Done
 -----|-------|-----
 20.7.2021 | 3.5h | Getting familiar with course material and materials about shortest path algorithms, starting project and setting up github.
 21.7.2021 | 2h | Familiarising with JPS and starting project specifications.
-23.7.2021 | 1h | Familiarising with MovingAi pixel maps 
+23.7.2021 | 1h | Familiarising with MovingAi pixel maps. 
 24.7.2021 | 2h  | writing weekly report and finding new articles on JPS.
 **Week 1** | **8.5h**
-
+| | 
+28.7.2021 | 5.5.h | Starting coding Dijkstra. 
+29.7.2021 | 5 h | Dijkstra distances and finding shortest path, trying to figure out Gradle. 
+30.7.2021 | | |
 -------------------
