@@ -7,19 +7,13 @@
  */
 
 plugins {
-    // Apply the java plugin to add support for Java
     id 'java'
     id 'application'
     id 'jacoco'
     id 'checkstyle'
-
-    // Apply the application plugin to add support for building an application
-//
-//    id 'jacoco'
-//    
-//    id 'checkstyle'
 }
 
+// Define the main class for the application
 application {
     mainClass = 'Pathfinding.Main'
 }
@@ -42,21 +36,13 @@ dependencies {
     testImplementation 'junit:junit:4.13'
 }
 
-// Define the main class for the application
-//application {
-//    mainClassName = 'Pathfinding.Main'
-//}
-//
-//
 jacocoTestReport {
     reports {
         xml.enabled = true
         html.enabled = true
     }
-  
 }
-//
-//
+
 run {
     standardInput = System.in
     standardOutput = System.out
