@@ -23,6 +23,7 @@ public class Dijkstra {
     Node startNode;
     Node endNode;
     ArrayList<Node> route = new ArrayList<>();
+    Graph graph;
 
 /**
  * Creates the data structures needed. 
@@ -38,9 +39,10 @@ public class Dijkstra {
         n = mapSize + 1;
         distanceGraph = new double[n][n];
         nodesVisited = new double[n][n];
+        graph = new Graph(startX, startY, endX, endY, n);
     }
 
-    private void createGraph() {
+    public void createGraph() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 distanceGraph[j][i] = Integer.MAX_VALUE;
@@ -118,8 +120,10 @@ public class Dijkstra {
                 break;
             }
             route.add(smallestNode);
+            graph.addRoutePoint(smallestNode.nodeX, smallestNode.nodeY);
             currentNode = smallestNode;
         }
+        System.out.println(graph);
         Collections.reverse(route);
     }
 
