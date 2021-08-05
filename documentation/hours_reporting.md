@@ -12,4 +12,7 @@ Date | Hours | Done
 29.7.2021 | 5 h | Dijkstra distances and finding shortest path, trying to figure out Gradle. 
 30.7.2021 | 5 h | Github actions, Codecov, Gradle, Jacoco and checkstyle config and adding Javadoc
 **Week 2** | 15.5 h |
+||
+4.8. | 2h | Drawing map and route on map. Reading about JPS
+5.8. | 1,5h | Tests for Dijkstra and trying to figure out how to deal with obstacles.
 -------------------

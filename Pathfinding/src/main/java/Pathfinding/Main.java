@@ -17,12 +17,11 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int mapSize = 20;
-        Dijkstra dijkstra = new Dijkstra(2, 1, 20, 18, mapSize);
+        int mapSize = 10;
+        Dijkstra dijkstra = new Dijkstra(10, 1, 5, 10, mapSize);
         dijkstra.findRoute();
         dijkstra.route.forEach(node -> System.out.println(node));
         System.out.println("");
-
     }
 
 }

@@ -10,10 +10,9 @@ import java.util.PriorityQueue;
  *
  * @author eebe
  */
-
 /**
-* Dijkstra shortest path algorithm
-*/
+ * Dijkstra shortest path algorithm
+ */
 public class Dijkstra {
 
     int n;
@@ -25,14 +24,15 @@ public class Dijkstra {
     ArrayList<Node> route = new ArrayList<>();
     Graph graph;
 
-/**
- * Creates the data structures needed. 
- * @param startX Start point X-axis.
- * @param startY Start point Y-axis.
- * @param endX End point X-axis.
- * @param endY End point Y-axis.
- * @param mapSize Integer with map height. The map is as wide as high.
- */
+    /**
+     * Creates the data structures needed.
+     *
+     * @param startX Start point X-axis.
+     * @param startY Start point Y-axis.
+     * @param endX End point X-axis.
+     * @param endY End point Y-axis.
+     * @param mapSize Integer with map height. The map is as wide as high.
+     */
     public Dijkstra(int startX, int startY, int endX, int endY, int mapSize) {
         startNode = new Node(startX, startY, 0);
         endNode = new Node(endX, endY, Integer.MAX_VALUE);
@@ -45,13 +45,19 @@ public class Dijkstra {
     public void createGraph() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                distanceGraph[j][i] = Integer.MAX_VALUE;
+                char node = graph.getNode(i, j);
+                if (node == '@') {
+                    distanceGraph[j][i] = -5;
+                } else {
+                    distanceGraph[j][i] = Integer.MAX_VALUE;
+                }
             }
         }
     }
-/** 
- * Goes trough graph and saves distances from start node to end node. 
- */
+
+    /**
+     * Goes trough graph and saves distances from start node to end node.
+     */
     public void shortestPath() {
         createGraph();
         heap.add(new Node(startNode.nodeX, startNode.nodeY, 0));
@@ -89,9 +95,10 @@ public class Dijkstra {
             }
         }
     }
-/** 
- * Finds the nodes in the route and saves them to the List route. 
- */
+
+    /**
+     * Finds the nodes in the route and saves them to the List route.
+     */
     public void findRoute() {
         shortestPath();
         Node currentNode = new Node(endNode.nodeX, endNode.nodeY, distanceGraph[endNode.nodeX][endNode.nodeY]);
@@ -142,6 +149,12 @@ public class Dijkstra {
             }
             System.out.println("");
         }
+    }
+    public Graph getGraph() {
+        return this.graph;
+    }
+    public List getRouteList() {
+        return route;
     }
 
 }

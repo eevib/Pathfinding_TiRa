@@ -10,7 +10,7 @@ public class Graph {
     int n;
 
     public Graph(int startX, int startY, int endX, int endY, int n) {
-        graph = new char[n+1][n+1];
+        graph = new char[n][n];
         this.n = n;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -30,6 +30,9 @@ public class Graph {
         }
         graph[x][y] = '+';
     }
+    public char getNode(int x, int y) {
+        return graph[x][y];
+    }
     
     @Override
     public String toString() {
@@ -41,5 +44,8 @@ public class Graph {
             printedGraph += "\n"; 
         }
         return printedGraph;
+    }
+    public int getMapSize() {
+        return graph.length-1;
     }
 }
