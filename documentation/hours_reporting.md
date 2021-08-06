@@ -14,5 +14,7 @@ Date | Hours | Done
 **Week 2** | 15.5 h |
 ||
 4.8. | 2h | Drawing map and route on map. Reading about JPS
-5.8. | 1,5h | Tests for Dijkstra and trying to figure out how to deal with obstacles.
+5.8. | 3h | Tests for Dijkstra and trying to figure out how to deal with obstacles.
+6.8. | 6h | Trying to get Codecov working and figuring out how to implement JPS. Not really getting too much done. 
+**Week3** | 11 h |
 -------------------
