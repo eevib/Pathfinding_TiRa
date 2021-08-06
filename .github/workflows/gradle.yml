@@ -23,7 +23,7 @@ jobs:
       run: cd Pathfinding && chmod +x gradlew
     - name: Test with Gradle
       run: cd Pathfinding && ./gradlew test
-    - name: Code coverage raport
+    - name: Code coverage rapost
       run: cd Pathfinding && ./gradlew jacocoTestReport
     - name: Data to codecov
       run: cd Pathfinding && bash <(curl -s https://codecov.io/bash)
