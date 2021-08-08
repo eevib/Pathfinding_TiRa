@@ -1,4 +1,4 @@
-# Week 2
+# Week 3
 
 [Hour report](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/hours_reporting.md)
 
