@@ -2,7 +2,7 @@
 
 [Hour report](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/hours_reporting.md)
 
-## What did I do during week 2?
+## What did I do during week 3
 * Junit tests for Dijkstra.
 * Tried to figure out why Codecov doesn't find my repository, didn't find any solution.
 * Made a simple solution for route visualization.
