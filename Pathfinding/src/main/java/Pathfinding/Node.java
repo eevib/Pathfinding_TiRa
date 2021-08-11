@@ -20,6 +20,7 @@ public class Node implements Comparable<Node> {
         if(this.distance > otherNode.distance) return 1;
         return 0;
     }
+    
     @Override
     public String toString() {
         return "(" + nodeX + nodeY + "), distance " + distance;
@@ -36,4 +37,5 @@ public class Node implements Comparable<Node> {
     public void setDistance(double distance) {
         this.distance = distance;
     }
+
 }
