@@ -25,21 +25,18 @@ public class Dijkstra {
     Graph graph;
 
     /**
-     * Creates the data structures needed.
+     * Creates data structures needed.
      *
-     * @param startX Start point X-axis.
-     * @param startY Start point Y-axis.
-     * @param endX End point X-axis.
-     * @param endY End point Y-axis.
-     * @param mapSize Integer with map height. The map is as wide as high.
+     * @param graph map where starting node is marked S and goal node is marked
+     * F. Obstacles are marked @.
      */
-    public Dijkstra(int startX, int startY, int endX, int endY, int mapSize) {
-        startNode = new Node(startX, startY, 0);
-        endNode = new Node(endX, endY, Integer.MAX_VALUE);
-        n = mapSize + 1;
+    public Dijkstra(Graph graph) {
+        this.graph = graph;
+        startNode = new Node(graph.startX, graph.startY, 0);
+        endNode = new Node(graph.endX, graph.endY, Integer.MAX_VALUE);
+        n = graph.getMapSize() + 1;
         distanceGraph = new double[n][n];
         nodesVisited = new double[n][n];
-        graph = new Graph(startX, startY, endX, endY, n);
     }
 
     public void createGraph() {

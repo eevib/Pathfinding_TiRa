@@ -18,10 +18,18 @@ public class Main {
      */
     public static void main(String[] args) {
         int mapSize = 10;
-        Dijkstra dijkstra = new Dijkstra(10, 1, 5, 10, mapSize);
+        Graph graph = new Graph(2, 2, 5, 10, mapSize + 1);
+        Dijkstra dijkstra = new Dijkstra(graph);
         dijkstra.findRoute();
         dijkstra.route.forEach(node -> System.out.println(node));
         System.out.println("");
+
+        Graph graphJPS = new Graph(2, 2, 5, 10, mapSize + 1);
+        JPS jps = new JPS(graphJPS);
+        jps.shortestPath();
+        System.out.println(graphJPS);
+        jps.route.forEach(node -> System.out.println(node));
+
     }
 
 }

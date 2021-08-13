@@ -18,4 +18,5 @@ Date | Hours | Done
 6.8. | 6h | Trying to get Codecov working and figuring out how to implement JPS. Not really getting too much done. 
 **Week3** | 11 h |
 11.8. | 2h | Finally understanding how JPS works, not much coding, but got started.
+11.8. | 1h | Fixing heuristic estimation of distance, starting coding JPS. 
 -------------------
