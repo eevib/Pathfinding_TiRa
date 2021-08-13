@@ -19,4 +19,8 @@ Date | Hours | Done
 **Week3** | 11 h |
 11.8. | 2h | Finally understanding how JPS works, not much coding, but got started.
 11.8. | 1h | Fixing heuristic estimation of distance, starting coding JPS. 
+12.8. | 6h | Trying to implement JPS without success.
+13.8. | 8h | Swithcing to coding A* (took many hours to get it done), javadoc, weekly report, tests, started testing and implementation document.
+**Week4** | 17 h |
 -------------------
+
