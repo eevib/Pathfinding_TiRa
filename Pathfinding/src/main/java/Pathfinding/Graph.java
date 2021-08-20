@@ -24,7 +24,7 @@ public class Graph {
         this.n = n;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                graph[j][i] = '.';
+                graph[i][j] = '.';
             }
         }
         graph[startX][startY] = 'S';
@@ -49,8 +49,8 @@ public class Graph {
     @Override
     public String toString() {
         String printedGraph = "";
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < n; j++) {
                 printedGraph += "" + graph[j][i];
             }
             printedGraph += "\n";
@@ -63,7 +63,7 @@ public class Graph {
     }
 
     public boolean passable(int x, int y) {
-        if (x < n && y < n && x >= 0 && y >= 0) {
+        if (x < n && y < n && x > 0 && y > 0) {
             if (graph[x][y] != '@') {
                 return true;
             }
@@ -79,13 +79,18 @@ public class Graph {
         return this.startY;
     }
 
+    /**
+     * Returns a list with neigbours. In column 0 neigbhbour x value, in column 1 neighbour y value and in column 2 the direction, 1 if up/down and 2 if diagonal. 
+     * @param x
+     * @param y
+     * @return a list of neighbours.
+     */
     public int[][] getNeighbours(int x, int y) {
-        int[][] neighbours = new int[8][3];
+        int[][] neighbours = new int[8][2];
 
         if (passable(x - 1, y)) {
             neighbours[0][0] = x - 1;
             neighbours[0][1] = y;
-            neighbours[0][2] = 1;
         } else {
             neighbours[0][0] = -1;
             neighbours[0][1] = -1;
@@ -94,7 +99,6 @@ public class Graph {
         if (passable(x + 1, y)) {
             neighbours[1][0] = x + 1;
             neighbours[1][1] = y;
-            neighbours[1][2] = 1;
 
         } else {
             neighbours[1][0] = -1;
@@ -104,7 +108,6 @@ public class Graph {
         if (passable(x, y - 1)) {
             neighbours[2][0] = x;
             neighbours[2][1] = y - 1;
-            neighbours[2][2] = 1;
         } else {
             neighbours[2][0] = -1;
             neighbours[2][1] = -1;
@@ -113,7 +116,7 @@ public class Graph {
         if (passable(x, y + 1)) {
             neighbours[3][0] = x;
             neighbours[3][1] = y + 1;
-            neighbours[3][2] = 1;
+
         } else {
             neighbours[3][0] = -1;
             neighbours[3][1] = -1;
@@ -122,7 +125,6 @@ public class Graph {
         if (passable(x - 1, y - 1)) {
             neighbours[4][0] = x - 1;
             neighbours[4][1] = y - 1;
-            neighbours[4][2] = 2;
         } else {
             neighbours[4][0] = -1;
             neighbours[4][1] = -1;
@@ -131,7 +133,7 @@ public class Graph {
         if (passable(x - 1, y + 1)) {
             neighbours[5][0] = x - 1;
             neighbours[5][1] = y + 1;
-            neighbours[5][2] = 2;
+
         } else {
             neighbours[5][0] = -1;
             neighbours[5][1] = -1;
@@ -140,7 +142,7 @@ public class Graph {
         if (passable(x + 1, y - 1)) {
             neighbours[6][0] = x + 1;
             neighbours[6][1] = y - 1;
-            neighbours[6][2] = 2;
+
         } else {
             neighbours[6][0] = -1;
             neighbours[6][1] = -1;
@@ -148,11 +150,14 @@ public class Graph {
         if (passable(x + 1, y + 1)) {
             neighbours[7][0] = x + 1;
             neighbours[7][1] = y + 1;
-            neighbours[7][2] = 2;
+
         } else {
             neighbours[7][0] = -1;
             neighbours[7][1] = -1;
         }
         return neighbours;
+    }
+    public void addJumpPoint(int x, int y) {
+        graph[x][y] = '*';
     }
 }

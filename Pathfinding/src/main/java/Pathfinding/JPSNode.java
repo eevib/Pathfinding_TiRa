@@ -29,6 +29,8 @@ public class JPSNode implements Comparable<JPSNode> {
         this.g = Double.POSITIVE_INFINITY;
         this.h = Double.POSITIVE_INFINITY;
         updateGHF(this.g, this.h);
+        this.parentX = -1;
+        this.parentY = -1;
     }
 
     /**
@@ -64,7 +66,7 @@ public class JPSNode implements Comparable<JPSNode> {
     }
 
     public String toString() {
-        return "(" + this.nodeX + ", " + this.nodeY + "), parent: " + this.parentX + ", " + this.parentY + ". Distance: " + this.g;
+        return "(" + this.nodeX + ", " + this.nodeY + "), parent: " + this.parentX + ", " + this.parentY + ".g: " + this.g + ", h: " + this.h + ", f: " + this.f;
 
     }
 
