@@ -22,8 +22,8 @@ Date | Hours | Done
 12.8. | 6h | Trying to implement JPS without success.
 13.8. | 8h | Swithcing to coding A* (took many hours to get it done), javadoc, weekly report, tests, started testing and implementation document.
 **Week4** | 17 h |
--------------------
 17.8. | 4,5h | Mostly doing neighbour pruning and checking that it works.
 18.8. | 5,5h | JPS forward, jump and identify successors.
 20.8. | 7h | JPS still not working, finding a big problem but don't have time to fix it. 
 **Week5** | 17 h | 
+-------------------
