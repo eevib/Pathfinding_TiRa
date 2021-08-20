@@ -14,7 +14,8 @@ Comparing shortest path algorithms Dijkstra and JPS. Project for datastructure a
 * [Week 2](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/weekly_report_2.md)
 * [Week 3](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/weekly_report_3.md)
 * [Week 4](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/weekly_report_4.md)
+* [Week 5](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/weekly_report_5.md)
 
 ## Situation now
-Dijkstra algorithm is implemented and the JPS algortihm is started by implementing A* algorithm. No own data structures are made.
+Dijkstra algorithm is implemented and the JPS algortihm is started, unfortunately it doesn't work as it should. 
 No performance tests are made, however some Junits test can be found. 
