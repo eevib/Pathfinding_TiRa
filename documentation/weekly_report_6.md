@@ -2,7 +2,7 @@
 
 [Hour report](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/hours_reporting.md)
 
-## What did I do during week 4?
+## What did I do during week 6?
 * Fixed Dijkstra to work with obstacles too.
 * Founded and fixed bugs in JPS (jumped with wrong node).
 * Got the distance update working. 
