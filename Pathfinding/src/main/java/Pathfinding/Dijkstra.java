@@ -43,11 +43,8 @@ public class Dijkstra {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 char node = graph.getNode(i, j);
-                if (node == '@') {
-                    distanceGraph[j][i] = -5;
-                } else {
-                    distanceGraph[j][i] = Integer.MAX_VALUE;
-                }
+                distanceGraph[j][i] = Integer.MAX_VALUE;
+
             }
         }
     }
@@ -75,6 +72,12 @@ public class Dijkstra {
                     } else {
                         double oldDistance = distanceGraph[currentNode.nodeX + j][currentNode.nodeY + i];
                         double newDistance;
+                        // if there is a obstacle, the distance is put to infinity.
+                        if (!graph.passable(currentNode.nodeX + j, currentNode.nodeY + i)) {
+                            newDistance = Double.POSITIVE_INFINITY;
+                            distanceGraph[currentNode.nodeX + j][currentNode.nodeY + i] = newDistance;
+                            continue;
+                        }
                         if (i == 0 || j == 0) {
                             newDistance = currentNode.distance + 1;
                         } else {
@@ -147,9 +150,11 @@ public class Dijkstra {
             System.out.println("");
         }
     }
+
     public Graph getGraph() {
         return this.graph;
     }
+
     public List getRouteList() {
         return route;
     }

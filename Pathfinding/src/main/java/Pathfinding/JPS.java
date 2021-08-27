@@ -15,7 +15,7 @@ public class JPS {
     int n;
     JPSNode[][] nodes;
     JPSNode[][] possibleBetterNodes;
-    Boolean[][] isOnOpenList;
+    Boolean[][] isAlreadyChecked;
     ArrayList<JPSNode> closedList = new ArrayList<>();
     PriorityQueue<JPSNode> openList = new PriorityQueue<>();
     JPSNode startNode;
@@ -34,19 +34,22 @@ public class JPS {
         this.startNode = new JPSNode(graph.startX, graph.startY);
         this.endNode = new JPSNode(graph.endX, graph.endY);
         nodes = new JPSNode[n][n];
-        isOnOpenList = new Boolean[n][n];
+        possibleBetterNodes = new JPSNode[n][n];
+        isAlreadyChecked = new Boolean[n][n];
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes.length; j++) {
                 JPSNode node = new JPSNode(i, j);
                 nodes[i][j] = node;
-                isOnOpenList[i][j] = false;
+                isAlreadyChecked[i][j] = false;
+                possibleBetterNodes[i][j] = node;
             }
         }
 
     }
 
     /**
-     * Supposed to find the shortest route from startpoint to endpoint using JPS, not yet working as it should.
+     * Supposed to find the shortest route from startpoint to endpoint using
+     * JPS, not yet working as it should.
      */
     public void shortestPath() {
         //start point added to openList and to nodes. 
@@ -55,36 +58,37 @@ public class JPS {
         start.updateGHF(0, distanceToEnd);
         nodes[startNode.nodeX][startNode.nodeY] = start;
         openList.add(start);
-        isOnOpenList[start.nodeX][start.nodeY] = true;
-        JPSNode previousNode = startNode;
-        // Picks the node with shortest f value. 
+        isAlreadyChecked[start.nodeX][start.nodeY] = true;
+        // Picks the node with smallest h value. 
         while (!openList.isEmpty()) {
             JPSNode current = openList.poll();
             System.out.println("current " + current);
-            
+            isAlreadyChecked[current.nodeX][current.nodeY] = true;
+
             // End node is found
             if (current.nodeX == endNode.nodeX && current.nodeY == endNode.nodeY) {
-                System.out.println(previousNode);
-                endNode.setParent(previousNode.nodeX, previousNode.nodeY);
-                endNode.updateGHF(current.g, 0);
-                nodes[endNode.nodeX][endNode.nodeY] = endNode;
+                endNode = current;
                 System.out.println("end: " + endNode);
+                findPath(nodes[endNode.nodeX][endNode.nodeY]);
                 break;
             }
             List<JPSNode> successorNodes = identifySuccessors(current);
-            
+
             // gets successors and adds them to openList.
             if (!successorNodes.isEmpty()) {
                 for (int i = 0; i < successorNodes.size(); i++) {
                     JPSNode successor = successorNodes.get(i);
+                    System.out.println("successor: " + successor);
+                    if (isAlreadyChecked[successor.nodeX][successor.nodeY]) {
+                        if (successor.g < nodes[successor.nodeX][successor.nodeY].g) {
+                            nodes[successor.nodeX][successor.nodeY] = successor;
+                        }
+                    }
                     openList.add(successor);
                 }
             }
-            closedList.add(current);
-            previousNode = current;
+            //   printDistanceGraph();
         }
-       // The findPath doesn't work, because the route found is not right. 
-        //    findPath(nodes[endNode.nodeX][endNode.nodeY]);
     }
 
     public List<JPSNode> identifySuccessors(JPSNode node) {
@@ -93,17 +97,15 @@ public class JPS {
         for (int i = 0; i < neighbours.length; i++) {
             int nx = neighbours[i][0];
             int ny = neighbours[i][1];
-            if (nx == -1) { // non existing neighbours have value -1
-                continue;
+            JPSNode jump = jump(node, nx - node.nodeX, ny - node.nodeY);
+            if (jump != null) {
+                jump.setParent(node.nodeX, node.nodeY);
+                successors.add(jump);
+                graph.addJumpPoint(jump.nodeX, jump.nodeY);
+                if (possibleBetterNodes[jump.nodeX][jump.nodeY].g < nodes[jump.nodeX][jump.nodeY].g) {
+                    nodes[jump.nodeX][jump.nodeY] = jump;
+                }
             }
-            JPSNode n = new JPSNode(nx, ny);
-            n.setParent(node.nodeX, node.nodeY);
-            n.updateGHF(node.g + getNodeCost(n), estimateDistanceToEnd(n));
-            JPSNode jump = jump(n, n.nodeX - n.parentX, n.nodeY - n.parentY);  // next jump point
-            successors.add(n);
-            if(jump!= null && jump.h == 0) {
-                return successors;
-            }         
         }
         return successors;
     }
@@ -114,29 +116,35 @@ public class JPS {
         if (!graph.passable(x + dx, y + dy)) {
             return null;
         }
-        JPSNode n = nodes[x + dx][y + dy];
+        JPSNode n = new JPSNode(x + dx, y + dy);
         n.setParent(node.nodeX, node.nodeY);
         double nodeCost = getNodeCost(n);
         n.updateGHF(node.g + nodeCost, estimateDistanceToEnd(n));
+        possibleBetterNodes[n.nodeX][n.nodeY] = n;
         if (n.nodeX == endNode.nodeX && n.nodeY == endNode.nodeY) {
             return n;
         }
+
+        int dxn = (n.nodeX - node.nodeX) / Math.max(Math.abs(n.nodeX - node.nodeX), 1);
+        int dyn = (n.nodeY - node.nodeY) / Math.max(Math.abs(n.nodeY - node.nodeY), 1);
         // When forced neighbours are found the node is returned
-        if (forcedNeighbours(x, y, dx, dy)) {
+        if (forcedNeighbours(n.nodeX, n.nodeY, dxn, dyn)) {
             return n;
         }
         // diagonal direction
-        if (dx != 0 && dy != 0) {
-            if (jump(n, dx, 0) != null) {
+        if (dxn != 0 && dyn != 0) {
+            if (jump(n, dxn, 0) != null) {
                 return n;
             }
-            if (jump(n, 0, dy) != null) {
+            if (jump(n, 0, dyn) != null) {
                 return n;
             }
         }
-        dx = n.nodeX - node.nodeX;
-        dy = n.nodeY - node.nodeY;
-        return jump(n, dx, dy);
+        // Normalized direction
+//        int dx1 = (n.nodeX - node.nodeX) / Math.max(Math.abs(n.nodeX - node.nodeX), 1);
+//        int dy1 = (n.nodeY - node.nodeY) / Math.max(Math.abs(n.nodeY - node.nodeY), 1);
+        //   System.out.println("return jump: " + n + ", dx + dy " + dx + dy);
+        return jump(n, dxn, dyn);
     }
 
     // A node n in neighbours(x) is forced if:
@@ -144,63 +152,84 @@ public class JPS {
     // 2. len((p(x),x,n))< len((p(x),...,x,n)\x)
     // https://lucho1.github.io/JumpPointSearch/#before-starting pictures used to understand rules
     public boolean forcedNeighbours(int x, int y, int dx, int dy) {
+//        if (dx == 0 || dy == 0) {
+//            if (dx != 0) {
+//                if (graph.passable(x + dx, y + 1) && !graph.passable(x, y + 1)
+//                        || graph.passable(x + dx, y - 1) && !graph.passable(x, y - 1)) {
+//                    return true;
+//                }
+//            } else {
+//                if (graph.passable(x + 1, y + dy) && !graph.passable(x + 1, y)
+//                        || graph.passable(x - 1, y + dy) && !graph.passable(x - 1, y)) {
+//                    return true;
+//                }
+//
+//            }
+//        } else if (dx != 0 && dy != 0) {
+//            if (!graph.passable(x + dx, y + dy) && graph.passable(x + dx, y)
+//                    && graph.passable(x, y + dy)) {
+//                return true;
+//            }
+
+
         // diagonal direction
         if (dx != 0 && dy != 0) {
             if (!graph.passable(x - dx, y)) {
                 if (graph.passable(x - dx, y + dy)) {
                     return true;
                 }
-
             }
             if (!graph.passable(x, y - dy)) {
                 if (graph.passable(x + dx, y - dy)) {
                     return true;
                 }
             }
-        }
-        // horizontal direction
-        if (dx != 0) {
-            if (!graph.passable(x, y - 1)) {
-                if (graph.passable(x + dx, y - 1)) {
-                    return true;
-                }
-            }
-            if (!graph.passable(x, y + 1)) {
-                if (graph.passable(x + dx, y + 1)) {
-                    return true;
-                }
-            }
-            // vertical direction, dx = 0;
+            // horizontal direction
         } else {
-            if (!graph.passable(x - 1, y)) {
-                if (graph.passable(x - 1, y + dy)) {
-                    return true;
+
+            if (dx != 0) {
+                if (!graph.passable(x, y - 1)) {
+                    if (graph.passable(x + dx, y - 1)) {
+                        return true;
+                    }
                 }
-            }
-            if (!graph.passable(x + 1, y)) {
-                if (graph.passable(x + 1, y + dy)) {
-                    return true;
+                if (!graph.passable(x, y + 1)) {
+                    if (graph.passable(x + dx, y + 1)) {
+                        return true;
+                    }
+                }
+                // vertical direction, dx = 0;
+            } else {
+                if (!graph.passable(x - 1, y)) {
+                    if (graph.passable(x - 1, y + dy)) {
+                        return true;
+                    }
+                }
+                if (!graph.passable(x + 1, y)) {
+                    if (graph.passable(x + 1, y + dy)) {
+                        return true;
+                    }
                 }
             }
         }
-
         return false;
     }
 
     /**
      * Returns the cost of travel from parent node, sqrt(2) for diagonal and 1
      * for straight.
+     *
      * @param node
      * @return the distance from the neighbour node
      */
     public double getNodeCost(JPSNode node) {
-        int dx = (node.nodeX - node.parentX)/Math.max(Math.abs(node.nodeX-node.parentX), 1);
-        int dy = (node.nodeY - node.parentY)/Math.max(node.nodeY-node.parentY, 1);
+        int dx = (node.nodeX - node.parentX) / Math.max(Math.abs(node.nodeX - node.parentX), 1);
+        int dy = (node.nodeY - node.parentY) / Math.max(node.nodeY - node.parentY, 1);
         if (dx != 0 && dy != 0) {
             return sqrt(2);
         } else {
             return 1;
-            
+
         }
     }
 
@@ -215,70 +244,66 @@ public class JPS {
         int y = node.nodeY;
         int px = node.parentX;
         int py = node.parentY;
-        int[][] neighbours = graph.getNeighbours(node.nodeX, node.nodeY);
+        int[][] pNeighbours = new int[5][2];
 
-        // The start node has no parent and so no pruning is done, all neighbours are returned.
-        if (px < 0) {
-            return neighbours;
-        }
         // Normalized direction
         int dx = (x - px) / Math.max(Math.abs(x - px), 1);
         int dy = (y - py) / Math.max(Math.abs(y - py), 1);
 
-        // Moving straight up / down
-        // len((p(x),...,n)/x)<=len(/p(x),x,n))
-        if (dx == 0 || dy == 0) {
-            for (int i = 0; i < neighbours.length; i++) {
-                int nx = neighbours[i][0];
-                int ny = neighbours[i][1];
-
-                // If no neighbour (wall or obstacle) move to next one.
-                if (nx == -1 || ny == -1) {
-                    continue;
-                }
-                // Parent node is pruned.
-                if (nx == x && ny == y) {
-                    neighbours[i][0] = -1;
-                    neighbours[i][1] = -1;
-                    continue;
-                }
-                // Moving up / down
-                if (dx == 0) {
-                    if (ny + dy != ny) {
-                        neighbours[i][0] = -1;
-                        neighbours[i][1] = -1;
-                    } else {
-                        if (nx + dx != nx) {
-                            neighbours[i][0] = -1;
-                            neighbours[i][1] = -1;
-                        }
-                    }
-                }
-
+        // Moving diagonal
+        if (dx != 0 && dy != 0) {
+            if (graph.passable(x, y + dy)) {
+                pNeighbours[0][0] = x;
+                pNeighbours[0][1] = y + dy;
             }
-            //diagonal move (dx =! 0 || dy =! 0)
-            // len((p(x),...,n)/x)< len(/p(x),x,n))
+            if (graph.passable(x + dx, y)) {
+                pNeighbours[1][0] = x + dx;
+                pNeighbours[1][1] = y;
+            }
+            if (graph.passable(x, y + dy) || graph.passable(x + dx, y)) {
+                pNeighbours[2][0] = x + dx;
+                pNeighbours[2][1] = y + dy;
+            }
+            if (!graph.passable(x - dx, y) && graph.passable(x, y + dy)) {
+                pNeighbours[3][0] = x - dx;
+                pNeighbours[3][1] = y + dy;
+            }
+            if (!graph.passable(x, y - dy) && graph.passable(x + dx, y)) {
+                pNeighbours[4][0] = x + dx;
+                pNeighbours[4][1] = y - dy;
+            }
         } else {
-            for (int i = 0; i < neighbours.length; i++) {
-                int nx = neighbours[i][0];
-                int ny = neighbours[i][1];
-
-                // If no neighbour (wall or obstacle) move to next one.
-                if (nx == -1 || ny == -1) {
-                    continue;
+            // Moving vertical
+            if (dx == 0) {
+                if (graph.passable(x, y + dy)) {
+                    pNeighbours[0][0] = x;
+                    pNeighbours[0][1] = y + dy;
                 }
-                if (x - dx == nx) {
-                    if (y == ny) {
-                        neighbours[i][0] = -1;
-                        neighbours[i][1] = -1;
-                    } else if (x + dx == nx) {
-                        neighbours[i][0] = -1;
-                        neighbours[i][1] = -1;
-                    }
+                if (!graph.passable(x + 1, y)) {
+                    pNeighbours[1][0] = x + 1;
+                    pNeighbours[1][1] = y + dy;
+                }
+                if (!graph.passable(x - 1, y)) {
+                    pNeighbours[2][0] = x - 1;
+                    pNeighbours[2][1] = y + dy;
+                }
+                // Moving horizontal
+            } else if (graph.passable(x + dx, y)) {
+                if (graph.passable(x + dx, y)) {
+                    pNeighbours[0][0] = x + dx;
+                    pNeighbours[0][1] = y;
+                }
+                if (!graph.passable(x, y + 1)) {
+                    pNeighbours[1][0] = x + dx;
+                    pNeighbours[1][1] = y + 1;
+                }
+                if (!graph.passable(x, y - 1)) {
+                    pNeighbours[2][0] = x + dx;
+                    pNeighbours[2][1] = y - 1;
                 }
             }
         }
-        return neighbours;
+        return pNeighbours;
     }
 
     public void findPath(JPSNode endNode) {
@@ -334,12 +359,23 @@ public class JPS {
             }
             System.out.println("");
         }
+//        System.out.println("");
+//        System.out.println("********************************");
+//        System.out.println("Just a graph to check that my graph x and y is right");
+//        for (int i = 1; i < n; i++) {
+//            for (int j = 1; j < n; j++) {
+//                System.out.print(nodes[j][i].nodeX + "," + nodes[j][i].nodeY + "  ");
+//            }
+//            System.out.println("");
+//        }
+
         System.out.println("");
         System.out.println("********************************");
-        System.out.println("Just a graph to check that my graph x and y is right");
+        System.out.println("Parents");
         for (int i = 1; i < n; i++) {
             for (int j = 1; j < n; j++) {
-                System.out.print(nodes[j][i].nodeX + "," + nodes[j][i].nodeY + "  ");
+                String parents = "" + nodes[j][i].parentX + "," + nodes[j][i].parentY + "  ";
+                System.out.print(parents);
             }
             System.out.println("");
         }

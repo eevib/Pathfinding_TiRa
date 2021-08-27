@@ -20,31 +20,37 @@ public class Main {
      */
     public static void main(String[] args) {
         int mapSize = 10;
-        Graph graph = new Graph(1, 1, 10, 10, mapSize + 1);
-       // graph.addObstacle(3, 2);
-       // graph.addObstacle(4, 4);
-       // graph.addObstacle(3, 4);
-       // graph.addObstacle(3, 5);
+        Graph graph = new Graph(2, 2, 5, 10, mapSize + 1);
+        graph.addObstacle(3, 1);
+        graph.addObstacle(3, 2);
+        graph.addObstacle(3, 2);
+        graph.addObstacle(3, 4);
+        graph.addObstacle(4, 6);
+        graph.addObstacle(2, 6);
+        graph.addObstacle(3, 6);
+        graph.addObstacle(4, 5);
+        graph.addObstacle(5, 5);
+        graph.addObstacle(5, 7);
+        graph.addObstacle(6, 7);
+        graph.addObstacle(7, 7);
+        graph.addObstacle(8, 7);
+        graph.addObstacle(4, 7);
         System.out.println(graph);
-
+//
 //        Dijkstra dijkstra = new Dijkstra(graph);
 //        dijkstra.findRoute();
 //        dijkstra.route.forEach(node -> System.out.println(node));
+//        System.out.println(graph);
 //        System.out.println("");
-      //  Graph graphJPS = new Graph(2, 2, 5, 10, mapSize + 1);
+        //  Graph graphJPS = new Graph(2, 2, 5, 10, mapSize + 1);
         JPS jps = new JPS(graph);
-        JPSNode node = new JPSNode(2, 6);
-        node.setParent(2, 5);
-        List<JPSNode> successors = new ArrayList<>();
-        successors = jps.identifySuccessors(node);
-        successors.stream().forEach(n -> System.out.println(n));
         jps.shortestPath();
         System.out.println("");
         jps.printDistanceGraph();
         System.out.println("");
-   //     System.out.println(graphJPS);
-        //   jps.route.forEach(node -> System.out.println(node));
-        
+        System.out.println(graph);
+        jps.route.forEach(n -> System.out.println(n));
+
     }
 
 }

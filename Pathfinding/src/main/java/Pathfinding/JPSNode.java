@@ -56,10 +56,10 @@ public class JPSNode implements Comparable<JPSNode> {
 
     @Override
     public int compareTo(JPSNode t) {
-        if (this.f < t.f) {
+        if (this.h < t.h) {
             return -1;
         }
-        if (this.f > t.f) {
+        if (this.h > t.h) {
             return 1;
         }
         return 0;

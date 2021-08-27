@@ -80,7 +80,9 @@ public class Graph {
     }
 
     /**
-     * Returns a list with neigbours. In column 0 neigbhbour x value, in column 1 neighbour y value and in column 2 the direction, 1 if up/down and 2 if diagonal. 
+     * Returns a list with neigbours. In column 0 neigbhbour x value, in column
+     * 1 neighbour y value.
+     *
      * @param x
      * @param y
      * @return a list of neighbours.
@@ -157,7 +159,16 @@ public class Graph {
         }
         return neighbours;
     }
+
     public void addJumpPoint(int x, int y) {
+        if (graph[x][y] == 'S') {
+          //  graph[x][y] = '#';
+            return;
+        }
+        if (graph[x][y] == 'F') {
+          //  graph[x][y] = '#';
+            return;
+        }
         graph[x][y] = '*';
     }
 }
