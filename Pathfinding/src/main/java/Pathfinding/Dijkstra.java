@@ -130,7 +130,7 @@ public class Dijkstra {
             graph.addRoutePoint(smallestNode.nodeX, smallestNode.nodeY);
             currentNode = smallestNode;
         }
-        System.out.println(graph);
+     //   System.out.println(graph);
         Collections.reverse(route);
     }
 

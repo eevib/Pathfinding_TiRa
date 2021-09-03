@@ -56,17 +56,17 @@ public class JPSNode implements Comparable<JPSNode> {
 
     @Override
     public int compareTo(JPSNode t) {
-        if (this.h < t.h) {
+        if (this.f < t.f) {
             return -1;
         }
-        if (this.h > t.h) {
+        if (this.f > t.f) {
             return 1;
         }
         return 0;
     }
 
     public String toString() {
-        return "(" + this.nodeX + ", " + this.nodeY + "), parent: " + this.parentX + ", " + this.parentY + ".g: " + this.g + ", h: " + this.h + ", f: " + this.f;
+        return "(" + this.nodeX + ", " + this.nodeY + "), parent: " + this.parentX + ", " + this.parentY + ".g: " + String.format("%.2f", this.g) + ", h: " + String.format("%.2f", this.h) + ", f: " + String.format("%.2f", this.f);
 
     }
 

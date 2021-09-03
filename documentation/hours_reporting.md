@@ -32,4 +32,7 @@ Date | Hours | Done
 25.8. | 5h | JPS forward, fixing a few bugs in jump and getting it better. Fixing the distance update. 
 27.8. | 8h | Dijkstra with obstacles. JPS debugging. 
 **Week 6** | 13 h|
+||
+1.9. | 4h | Struggling with JPS
+3.9. |  | JPS
 -------------------
