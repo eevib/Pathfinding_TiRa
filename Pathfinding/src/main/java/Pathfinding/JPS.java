@@ -20,6 +20,8 @@ public class JPS {
     JPSNode endNode;
     public ArrayList<JPSNode> route = new ArrayList<>();
     Graph graph;
+    Boolean routeFound;
+    Double routeDistance;
 
     /**
      *
@@ -27,6 +29,8 @@ public class JPS {
      * F. Obstacles are marked @.
      */
     public JPS(Graph graph) {
+        this.routeDistance = Double.POSITIVE_INFINITY;
+        this.routeFound = false;
         this.n = graph.getMapSize() + 1;
         this.graph = graph;
         this.startNode = new JPSNode(graph.startX, graph.startY);
@@ -44,8 +48,7 @@ public class JPS {
     }
 
     /**
-     * Supposed to find the shortest route from startpoint to endpoint using
-     * JPS, not yet working as it should.
+     * Finds the shortest route from startpoint to endpoint using JPS.
      */
     public void shortestPath() {
         //start point added to openList and to nodes. 
@@ -58,12 +61,13 @@ public class JPS {
         // Picks the node with smallest f value. 
         while (!openList.isEmpty()) {
             JPSNode current = openList.poll();
-            System.out.println("Current: " +current);
             onOpenList[current.nodeX][current.nodeY] = false;
 
             // End node is found
             if (current.nodeX == endNode.nodeX && current.nodeY == endNode.nodeY) {
                 endNode = current;
+                routeFound = true;
+                routeDistance = current.g;
                 findPath(nodes[endNode.nodeX][endNode.nodeY]);
                 break;
             }
@@ -73,7 +77,6 @@ public class JPS {
             if (!successorNodes.isEmpty()) {
                 for (int i = 0; i < successorNodes.size(); i++) {
                     JPSNode successor = successorNodes.get(i);
-                    System.out.println("successor: " + successor);
                     if (successor.g < nodes[successor.nodeX][successor.nodeY].g) {
                         nodes[successor.nodeX][successor.nodeY] = successor;
                         if (!onOpenList[successor.nodeX][successor.nodeY]) {
@@ -85,34 +88,55 @@ public class JPS {
 
                 }
             }
-
-            //   printDistanceGraph();
         }
-        System.out.println("No route found");
+        // If the openList gets empty without reaching end point, no route is found between start and end point. 
+        if (!routeFound) {
+            System.out.println("No route found");
+        }
+
     }
 
+    /**
+     * Identifies the successor nodes.
+     *
+     * @param node to which successors are searched.
+     * @return A arrayList of successor nodes. If no successors are found,
+     * returns an empty list.
+     */
     public List<JPSNode> identifySuccessors(JPSNode node) {
         List<JPSNode> successors = new ArrayList<>();
-        int[][] neighbours = pruneNeighbours(node); // All neighbours
-        for (int i = 0; i < neighbours.length; i++) {
-            int nx = neighbours[i][0];
-            int ny = neighbours[i][1];
+        int[][] neighbours = pruneNeighbours(node); // Pruned neighbours. 
 
+        // Goes through all neighbours
+        for (int i = 0; i < neighbours.length; i++) {
+            int nx = neighbours[i][0]; // neighbour x
+            int ny = neighbours[i][1]; // neighbour y
+            // If neighour is null, it is marked -1 and we can continue.
             if (nx == -1) {
                 continue;
             }
+            // Jumps from node to the direction of neighbour
             JPSNode jump = jump(node, nx - node.nodeX, ny - node.nodeY);
             if (jump != null) {
                 jump.setParent(node.nodeX, node.nodeY);
                 double nodeCost = getJumpCost(jump);
                 jump.updateGHF(node.g + nodeCost, estimateDistanceToEnd(jump));
                 successors.add(jump);
-                graph.addJumpPoint(jump.nodeX, jump.nodeY);
+                //  graph.addJumpPoint(jump.nodeX, jump.nodeY);
             }
         }
         return successors;
     }
 
+    /**
+     * Jumps and returns node jumped to, if found.
+     *
+     * @param node the node from where the jump is done.
+     * @param dx x direction
+     * @param dy y direction
+     * @return JPS node if forced neighbours or end node is found, else jumps
+     * again from neighbour node to same direction.
+     */
     public JPSNode jump(JPSNode node, int dx, int dy) {
         int x = node.nodeX;
         int y = node.nodeY;
@@ -211,6 +235,12 @@ public class JPS {
         }
     }
 
+    /**
+     * Calculates the total distance from parent node.
+     *
+     * @param node the one the distance is calculated to.
+     * @return double value with the distance.
+     */
     public double getJumpCost(JPSNode node) {
         int dx = (node.nodeX - node.parentX) / Math.max(Math.abs(node.nodeX - node.parentX), 1);
         int dy = (node.nodeY - node.parentY) / Math.max(node.nodeY - node.parentY, 1);
@@ -305,26 +335,116 @@ public class JPS {
         return pNeighbours;
     }
 
+    /**
+     * Finds the path from the endNode to start node, by moving from one node to
+     * its parent.
+     *
+     * @param endNode
+     */
     public void findPath(JPSNode endNode) {
         JPSNode nextNode = nodes[endNode.nodeX][endNode.nodeY];
         route.add(endNode);
         while (true) {
             nextNode = nodes[nextNode.parentX][nextNode.parentY];
-            route.add(nextNode);
             if (nextNode.nodeX == startNode.nodeX && nextNode.nodeY == startNode.nodeY) {
+                route.add(nextNode);
                 Collections.reverse(route);
                 break;
             }
-            graph.addRoutePoint(nextNode.nodeX, nextNode.nodeY);
+            route.add(nextNode);
+
         }
 
     }
 
     /**
-     * Estimates the shortest distance to end node.
+     * Draws the route starting from end node, by calvulating the distance and
+     * direction between jump points.
+     */
+    public void drawRoute() {
+        Collections.reverse(route);
+        for (JPSNode n : route) {
+            if (n.parentX == -1) {
+                Collections.reverse(route);
+                return;
+            }
+            int distanceX = n.nodeX - n.parentX;
+            int distanceY = n.nodeY - n.parentY;
+            int x = n.nodeX;
+            int y = n.nodeY;
+            //  System.out.println("x " + x + ", y: " +y);
+
+            // moving diagonal
+            if (distanceX != 0 && distanceY != 0) {
+                if (distanceX > 0 && distanceY > 0) {
+                    for (int i = distanceX; i > 0; i--) {
+                        graph.addJPSRoutePoint(x, y);
+                        x--;
+                        y--;
+                    }
+
+                } else if (distanceX < 0 && distanceY < 0) {
+                    distanceY = -distanceY;
+                    for (int i = distanceY; i > 0; i--) {
+                        graph.addJPSRoutePoint(x, y);
+                        x++;
+                        y++;
+                    }
+                } else if (distanceY < 0) {
+                    for (int i = 0; i < distanceX; i++) {
+                        graph.addJPSRoutePoint(x, y);
+                        x--;
+                        y++;
+                    }
+
+                } else if (distanceX < 0) {
+                    for (int i = 0; i < distanceY; i++) {
+                        graph.addJPSRoutePoint(x, y);
+                        x++;
+                        y--;
+                    }
+                    //distanceX and distanceY < 0
+                }
+
+                // moving horizontal
+            } else if (distanceX != 0) {
+                if (distanceX > 0) {
+                    for (int i = distanceX; i > 0; i--) {
+                        graph.addJPSRoutePoint(x, y);
+                        x--;
+                    }
+
+                } else { //distanceX < 0
+                    distanceX = Math.abs(distanceX);
+                    for (int i = distanceX; i > 0; i--) {
+                        graph.addJPSRoutePoint(x, y);
+                        x++;
+                    }
+                }
+                // Moving vertical
+            } else {
+                if (distanceY > 0) {
+                    for (int i = distanceY; i > 0; i--) {
+                        graph.addJPSRoutePoint(x, y);
+                        y--;
+                    }
+                } else {
+                    distanceY = Math.abs(distanceY);
+                    for (int i = distanceY; i > 0; i--) {
+                        graph.addJPSRoutePoint(x, y);
+                        y++;
+                    }
+                }
+
+            }
+        }
+    }
+
+    /**
+     * Estimates the heuristic distance to end node.
      *
      * @param node The node for which the estimation is made.
-     * @return Double distance to end node.
+     * @return Double heuristic distance to end node.
      */
     public double estimateDistanceToEnd(JPSNode node) {
         int x = Math.abs(node.nodeX - endNode.nodeX);
@@ -332,7 +452,13 @@ public class JPS {
         double distance = Math.min(x, y) * sqrt(2) + Math.abs(y - x);
         return distance;
     }
+    public double getRouteDistance() {
+        return this.routeDistance;
+    }
 
+    /**
+     * Just to help debuggig.
+     */
     public void printDistanceGraph() {
         System.out.println("Distance from start");
         for (int y = 1; y < n; y++) {

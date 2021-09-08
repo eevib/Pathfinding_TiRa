@@ -21,8 +21,9 @@ public class Dijkstra {
     PriorityQueue<Node> heap = new PriorityQueue<>();
     Node startNode;
     Node endNode;
-    ArrayList<Node> route = new ArrayList<>();
+    public ArrayList<Node> route = new ArrayList<>();
     Graph graph;
+    Double routeDistance;
 
     /**
      * Creates data structures needed.
@@ -34,9 +35,10 @@ public class Dijkstra {
         this.graph = graph;
         startNode = new Node(graph.startX, graph.startY, 0);
         endNode = new Node(graph.endX, graph.endY, Integer.MAX_VALUE);
-        n = graph.getMapSize() + 1;
+        n = graph.getMapSize();
         distanceGraph = new double[n][n];
         nodesVisited = new double[n][n];
+        this.routeDistance = Double.POSITIVE_INFINITY;
     }
 
     public void createGraph() {
@@ -103,6 +105,7 @@ public class Dijkstra {
         shortestPath();
         Node currentNode = new Node(endNode.nodeX, endNode.nodeY, distanceGraph[endNode.nodeX][endNode.nodeY]);
         route.add(currentNode);
+        this.routeDistance = currentNode.distance;
         Node smallestNode = new Node(endNode.nodeX, endNode.nodeY, distanceGraph[endNode.nodeX][endNode.nodeY]);
         while (true) {
             for (int i = -1; i <= 1; i++) {
@@ -127,11 +130,16 @@ public class Dijkstra {
                 break;
             }
             route.add(smallestNode);
-            graph.addRoutePoint(smallestNode.nodeX, smallestNode.nodeY);
             currentNode = smallestNode;
         }
-     //   System.out.println(graph);
         Collections.reverse(route);
+    }
+
+    public void drawRoute() {
+        Collections.reverse(route);
+        for (Node n : route) {
+            graph.addRoutePoint(n.nodeX, n.nodeY);
+        }
     }
 
     public void printGraphs() {
@@ -157,6 +165,10 @@ public class Dijkstra {
 
     public List getRouteList() {
         return route;
+    }
+
+    public double getRouteDistance() {
+        return this.routeDistance;
     }
 
 }

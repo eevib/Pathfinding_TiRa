@@ -31,6 +31,31 @@ public class Graph {
         graph[endX][endY] = 'F';
     }
 
+    public Graph(int n) {
+        this.n = n;
+        graph = new char[n][n];
+    }
+
+    public boolean putStartPoint(int startX, int startY) {
+        if (this.passable(startX, startY)) {
+            graph[startX][startY] = 'S';
+            this.startX = startX;
+            this.startY = startY;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean putEndPoint(int endX, int endY) {
+        if (this.passable(endX, endY)) {
+            graph[endX][endY] = 'F';
+            this.endX = endX;
+            this.endY = endY;
+            return true;
+        }
+        return false;
+    }
+
     public void addObstacle(int x, int y) {
         graph[x][y] = '@';
     }
@@ -39,18 +64,35 @@ public class Graph {
         if (graph[x][y] == 'S') {
             return;
         }
+        if (graph[x][y] == 'F') {
+            return;
+        }
         graph[x][y] = '+';
+    }
+
+    public void addJPSRoutePoint(int x, int y) {
+        if (graph[x][y] == 'S') {
+            return;
+        }
+        if (graph[x][y] == 'F') {
+            return;
+        }
+        graph[x][y] = '?';
     }
 
     public char getNode(int x, int y) {
         return graph[x][y];
     }
 
+    public void putPoint(int x, int y, char mark) {
+        graph[x][y] = mark;
+    }
+
     @Override
     public String toString() {
         String printedGraph = "";
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < n; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 printedGraph += "" + graph[j][i];
             }
             printedGraph += "\n";
@@ -59,11 +101,11 @@ public class Graph {
     }
 
     public int getMapSize() {
-        return graph.length - 1;
+        return graph.length;
     }
 
     public boolean passable(int x, int y) {
-        if (x < n && y < n && x > 0 && y > 0) {
+        if (x < n && y < n && x >= 0 && y >= 0) {
             if (graph[x][y] != '@') {
                 return true;
             }
@@ -162,11 +204,11 @@ public class Graph {
 
     public void addJumpPoint(int x, int y) {
         if (graph[x][y] == 'S') {
-          //  graph[x][y] = '#';
+            //  graph[x][y] = '#';
             return;
         }
         if (graph[x][y] == 'F') {
-          //  graph[x][y] = '#';
+            //  graph[x][y] = '#';
             return;
         }
         graph[x][y] = '*';
