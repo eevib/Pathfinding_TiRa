@@ -171,6 +171,14 @@ public class JPS {
     // 1. n is not a natural neighbour of x
     // 2. len((p(x),x,n))< len((p(x),...,x,n)\x)
     // https://lucho1.github.io/JumpPointSearch/#before-starting pictures used to understand rules
+    /**
+     * Returns true if a node has a forced neighbour, moving in direction dx, dy.
+     * @param x
+     * @param y
+     * @param dx
+     * @param dy
+     * @return 
+     */
     public boolean forcedNeighbours(int x, int y, int dx, int dy) {
         // diagonal direction
         if (dx != 0 && dy != 0) {
@@ -358,7 +366,7 @@ public class JPS {
     }
 
     /**
-     * Draws the route starting from end node, by calvulating the distance and
+     * Draws the route starting from end node, by calculating the distance and
      * direction between jump points.
      */
     public void drawRoute() {
@@ -452,6 +460,8 @@ public class JPS {
         double distance = Math.min(x, y) * sqrt(2) + Math.abs(y - x);
         return distance;
     }
+    
+    
     public double getRouteDistance() {
         return this.routeDistance;
     }
@@ -484,16 +494,7 @@ public class JPS {
             }
             System.out.println("");
         }
-//        System.out.println("");
-//        System.out.println("********************************");
-//        System.out.println("Just a graph to check that my graph x and y is right");
-//        for (int i = 1; i < n; i++) {
-//            for (int j = 1; j < n; j++) {
-//                System.out.print(nodes[j][i].nodeX + "," + nodes[j][i].nodeY + "  ");
-//            }
-//            System.out.println("");
-//        }
-
+        
         System.out.println("");
         System.out.println("********************************");
         System.out.println("Parents");

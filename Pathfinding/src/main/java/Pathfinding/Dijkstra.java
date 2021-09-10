@@ -41,6 +41,9 @@ public class Dijkstra {
         this.routeDistance = Double.POSITIVE_INFINITY;
     }
 
+    /**
+     * Initializes distance graph.
+     */
     public void createGraph() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -135,13 +138,18 @@ public class Dijkstra {
         Collections.reverse(route);
     }
 
+    /**
+     * Draws found route on graph.
+     */
     public void drawRoute() {
-        Collections.reverse(route);
         for (Node n : route) {
             graph.addRoutePoint(n.nodeX, n.nodeY);
         }
     }
 
+    /**
+     * Just a method to help debugging, prints distanceGraph and nodeVisited graph.
+     */
     public void printGraphs() {
         System.out.println("DistanceGraph");
         for (int i = 0; i < n; i++) {

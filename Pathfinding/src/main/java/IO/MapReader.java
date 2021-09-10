@@ -36,7 +36,8 @@ public class MapReader {
 
     }
 
-    public Graph createGraph(File file) throws FileNotFoundException {
+    public Graph createGraph(File file) throws FileNotFoundException, IOException {
+        countRows(file);
         Scanner scanner = new Scanner(new FileReader(file));
         this.graph = new Graph(size+1);
         while (scanner.hasNextLine()) {

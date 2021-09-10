@@ -104,6 +104,12 @@ public class Graph {
         return graph.length;
     }
 
+    /**
+     * Returns true if x,y is not under 0, outside of map or an obstacle
+     * @param x
+     * @param y
+     * @return 
+     */
     public boolean passable(int x, int y) {
         if (x < n && y < n && x >= 0 && y >= 0) {
             if (graph[x][y] != '@') {
@@ -123,7 +129,7 @@ public class Graph {
 
     /**
      * Returns a list with neigbours. In column 0 neigbhbour x value, in column
-     * 1 neighbour y value.
+     * 1 neighbour y value. If neihgbour is non passable it is marked -1,-1.
      *
      * @param x
      * @param y
@@ -202,13 +208,16 @@ public class Graph {
         return neighbours;
     }
 
+    /**
+     * Adds a jump point to the graph.
+     * @param x
+     * @param y 
+     */
     public void addJumpPoint(int x, int y) {
         if (graph[x][y] == 'S') {
-            //  graph[x][y] = '#';
             return;
         }
         if (graph[x][y] == 'F') {
-            //  graph[x][y] = '#';
             return;
         }
         graph[x][y] = '*';

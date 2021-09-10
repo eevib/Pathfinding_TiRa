@@ -9,7 +9,7 @@ import Pathfinding.Graph;
  * @author eebe
  */
 public class TestDijkstra {
-    Graph graph = new Graph(1,1,2,5,11);
+    Graph graph = new Graph(1,1,2,5,10);
     Dijkstra dijkstra = new Dijkstra(graph);
     
     

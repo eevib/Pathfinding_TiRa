@@ -1,6 +1,4 @@
 # Pathfinding_TiRa
-![Java CI with Grasdle](https://github.com/eevib/Pathfinding_TiRa/workflows/Java%20CI%20with%20Gradle/badge.svg)
-[![codecov](https://codecov.io/gh/eevib/Pathfinding_TiRa/branch/main/graph/badge.svg?token=QY41EJLVWL)](https://codecov.io/gh/eevib/Pathfinding_TiRa)
 
 Comparing shortest path algorithms Dijkstra and JPS. Project for datastructure and algorithm course at the University of Helsinki.
 
@@ -17,6 +15,3 @@ Comparing shortest path algorithms Dijkstra and JPS. Project for datastructure a
 * [Week 5](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/weekly_report_5.md)
 * [Week 6](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/weekly_report_6.md)
 
-## Situation now
-Dijkstra algorithm is implemented and the JPS algortihm is almost ready, unfortunately it doesn't work as it should. 
-No performance tests are made, however some Junits test can be found. 

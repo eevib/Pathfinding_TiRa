@@ -25,7 +25,7 @@ public class ScenReader {
         while(scanner.hasNextLine()) {
             String line = scanner.nextLine();
             lines.add(line.split("\\s+"));
-            // StartX = 4, StartY = 5, endX = 6, endY = 7, distance = 8
+            // startX = [4], startY = [5], endX = [6], endY = [7], distance = [8]
         }
     }
     public ArrayList<String[]> getScens() {

@@ -36,7 +36,9 @@ Date | Hours | Done
 1.9. | 4h | Struggling with JPS
 3.9. | 8h | JPS finally working
 **Week 7** | 12 h|
+||
 5.9. | 2h | File reading and making graph of it.
 6.9. | 4h | Printing whole JPS route on map, familiarising with Movingai .scen  scenarious. Fixing graph to start from 0,0.
 8.9. | 6h | .scen reading and random picking of rotues and comparing distances. 
+10.9. | 6h | Performance tests, documentation. 
 -------------------

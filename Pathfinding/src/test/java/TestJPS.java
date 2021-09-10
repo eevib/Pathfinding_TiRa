@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author eebe
  */
 public class TestJPS {
-    Graph graph = new Graph(1,1,2,5,11);
+    Graph graph = new Graph(1,1,2,5,10);
     JPS jps = new JPS(graph);
     
     @Test
@@ -24,6 +24,6 @@ public class TestJPS {
     @Test
     public void rightLengthOfShortestPath() {
         jps.shortestPath();
-        assertEquals(jps.route.size(), 5);
+        assertEquals(jps.route.size(), 3);
     }
 }
