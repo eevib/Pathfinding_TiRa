@@ -24,4 +24,9 @@ public class TestDijkstra {
         dijkstra.findRoute();
         assertEquals(5, dijkstra.getRouteList().size());
     }
+    @Test
+    public void rightRouteDistance() {
+        dijkstra.findRoute();
+        assertEquals(4.414, dijkstra.getRouteDistance(), 0.001);
+    }
 }

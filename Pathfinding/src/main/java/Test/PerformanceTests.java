@@ -37,7 +37,7 @@ public class PerformanceTests {
      */
     public void performanceTest(int howMany) {
         Graph graph1 = graph;
-        double totalDistance = 0;
+        double totalErrorDistance = 0;
         double errorDistance = 0;
         int nr = 0;
         for (int i = 0; i < lines.size(); i++) {
@@ -62,7 +62,7 @@ public class PerformanceTests {
                 //   System.out.println(nr + ". i: " + i + ", dij: " + dijkstralength + ", jps: " + jps.getRouteDistance() + ", startx, y: " + startX + ", " + startY + ", endX,y: " + endX + ", " + endY);
                 nr++;
                 errorDistance = Math.abs(jps.getRouteDistance() - dijkstra.getRouteDistance());
-                totalDistance += dijkstra.getRouteDistance();
+                totalErrorDistance += dijkstra.getRouteDistance();
             }
             if (!compareToScen(dijkstralength, scenDistance)) {
                 System.out.println("The route with startPoint (" + startX + ", " + startY + ") and endPoint (" + endX + ", " + endY + ") are not correct ");
@@ -73,9 +73,9 @@ public class PerformanceTests {
         System.out.println("How many: " + howMany);
         System.out.println("Map: Berlin_2_1024");
         System.out.println("Average distance of routes: " + averageDistance);
-        System.out.println("Error % in distance " + errorDistance / totalDistance * 100 + " %");
+        System.out.println("Error % in distance " + errorDistance / totalErrorDistance * 100 + " %");
         System.out.println("Errors in total: " + nr);
-        System.out.println("Error % in nuber of routes: " + (double) nr / howMany * 100 + " %");
+        System.out.println("Error % in number of routes: " + (double) nr / howMany * 100 + " %");
         System.out.println();
 
     }

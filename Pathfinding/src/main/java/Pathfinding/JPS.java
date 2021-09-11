@@ -469,41 +469,41 @@ public class JPS {
     /**
      * Just to help debuggig.
      */
-    public void printDistanceGraph() {
-        System.out.println("Distance from start");
-        for (int y = 1; y < n; y++) {
-            for (int x = 1; x < n; x++) {
-                String distance = String.format("%.2f", nodes[x][y].g);
-                if (distance.equalsIgnoreCase("infinity")) {
-                    distance = "inf ";
-                }
-                System.out.print(distance + "    ");
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-        System.out.println("********************************");
-        System.out.println("H");
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < n; j++) {
-                String h = String.format("%.2f", nodes[j][i].h);
-                if (h.equalsIgnoreCase("infinity")) {
-                    h = "inf ";
-                }
-                System.out.print(h + "    ");
-            }
-            System.out.println("");
-        }
-        
-        System.out.println("");
-        System.out.println("********************************");
-        System.out.println("Parents");
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < n; j++) {
-                String parents = "" + nodes[j][i].parentX + "," + nodes[j][i].parentY + "  ";
-                System.out.print(parents);
-            }
-            System.out.println("");
-        }
-    }
+//    public void printDistanceGraph() {
+//        System.out.println("Distance from start");
+//        for (int y = 1; y < n; y++) {
+//            for (int x = 1; x < n; x++) {
+//                String distance = String.format("%.2f", nodes[x][y].g);
+//                if (distance.equalsIgnoreCase("infinity")) {
+//                    distance = "inf ";
+//                }
+//                System.out.print(distance + "    ");
+//            }
+//            System.out.println("");
+//        }
+//        System.out.println("");
+//        System.out.println("********************************");
+//        System.out.println("H");
+//        for (int i = 1; i < n; i++) {
+//            for (int j = 1; j < n; j++) {
+//                String h = String.format("%.2f", nodes[j][i].h);
+//                if (h.equalsIgnoreCase("infinity")) {
+//                    h = "inf ";
+//                }
+//                System.out.print(h + "    ");
+//            }
+//            System.out.println("");
+//        }
+//        
+//        System.out.println("");
+//        System.out.println("********************************");
+//        System.out.println("Parents");
+//        for (int i = 1; i < n; i++) {
+//            for (int j = 1; j < n; j++) {
+//                String parents = "" + nodes[j][i].parentX + "," + nodes[j][i].parentY + "  ";
+//                System.out.print(parents);
+//            }
+//            System.out.println("");
+//        }
+//    }
 }

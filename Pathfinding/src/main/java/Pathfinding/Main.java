@@ -29,7 +29,7 @@ public class Main {
         Graph Berlin_2_1024 = map.createGraph(new File("Berlin_2_1024.map"));
         ScenReader Berlin_2_1024_scen = new ScenReader(new File("Berlin_2_1024.map.scen"));
         PerformanceTests paths_Berlin_2_1024 = new PerformanceTests(Berlin_2_1024_scen.getScens(), Berlin_2_1024);
-      //  paths_Berlin_2_1024.run(10);
+        paths_Berlin_2_1024.run(10);
         
         Graph Berlin_1_512 = map.createGraph(new File("Berlin_1_512.map"));
         ScenReader Berlin_1_512_scen = new ScenReader(new File("Berlin_1_512.map.scen"));
