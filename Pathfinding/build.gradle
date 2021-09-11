@@ -47,5 +47,11 @@ run {
     standardInput = System.in
     standardOutput = System.out
 }
+jar {
+    manifest {
+        attributes 'Main-Class': 'Pathfinding.Main'
+    }
+}
+
 //
 //check.dependsOn jacocoTestReport
