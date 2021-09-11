@@ -4,6 +4,8 @@
 ### Unit testing
 JPS, Dijkstra and graph are tested with Junit tests. Hpwever the function of the algorithms can't be tested with Junit tests, therefore most of the effort is put towards performance tests. 
 
+![Junit tests](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/testCoverage.png)
+
 ### Manual testing
 The route made by both the algorithms can be printed. In the graph the start node is marked with an S and end node marked with an F.
 The correctness of the route were regardles of length checked by the drawing of both routes. The Berlin_1_512.map were used as then the map could be somehow easily read from the laptop screen. 
