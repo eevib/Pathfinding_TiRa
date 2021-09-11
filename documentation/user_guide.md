@@ -3,7 +3,6 @@
 The java program can be run with giving the command in the directory of the jar file with the command:   
 
 ```
-
 java -jar Pathfinding.jar 
 ```
 
