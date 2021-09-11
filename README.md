@@ -6,6 +6,7 @@ Comparing shortest path algorithms Dijkstra and JPS. Project for datastructure a
 * [Project specifications](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/project_specification.md)
 * [Implementation](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/implementation.md)
 * [Testing document](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/testing.md)
+* [User manual](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/user_guide.md)
 
 ## Weekly reports
 * [Week 1](https://github.com/eevib/Pathfinding_TiRa/blob/main/documentation/weekly_report_1.md)
